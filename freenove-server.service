@@ -1,0 +1,13 @@
+[Unit]
+Description=Freenove Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 main_headless.py
+WorkingDirectory=/home/pi/Freenove_4WD_Smart_Car_Kit_for_Raspberry_Pi/Code/Server
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
