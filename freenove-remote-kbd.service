@@ -1,0 +1,13 @@
+[Unit]
+Description=Freenove Remote Keyboard
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 main_remote_kbd.py
+WorkingDirectory=/home/pi/Freenove_4WD_Smart_Car_Kit_for_Raspberry_Pi/Code/Server
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
