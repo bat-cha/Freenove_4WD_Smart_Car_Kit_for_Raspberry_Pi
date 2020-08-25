@@ -30,6 +30,9 @@ if __name__ == '__main__':
     pwm=Servo()
     pwm.setServoPwm('0',90)
     pwm.setServoPwm('1',90)
+    pwm.setServoPwm('2',0)
+    pwm.setServoPwm('3',0)
+
 
     
 

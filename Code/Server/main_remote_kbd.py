@@ -20,6 +20,10 @@ HEAD_DOWN = 32
 HEAD_CENTER = 46
 HEAD_LEFT = 31
 HEAD_RIGHT = 33
+ARM_UP = 21
+ARM_DOWN = 35
+ARM_TIGHT = 34
+ARM_RELEASE = 36
 
 remote_keyboard = InputDevice('/dev/input/event0')
 
@@ -29,6 +33,8 @@ if __name__ == '__main__':
     servo = Servo()
     servo0=90
     servo1=90
+    servo6=0
+    servo7=90
     try:
         for event in remote_keyboard.read_loop():
             if event.type == ecodes.EV_KEY:
@@ -73,7 +79,26 @@ if __name__ == '__main__':
                     elif event.code == HEAD_CENTER:
                         servo.setServoPwm('0',90)
                         servo.setServoPwm('1',90)
-
+                    elif event.code == ARM_UP:
+                        servo6+=5
+                        if servo6>=180:
+                            servo6=180
+                        servo.setServoPwm('6',servo6)
+                    elif event.code == ARM_DOWN:
+                        servo6-=5
+                        if servo6<=0:
+                            servo6=0
+                        servo.setServoPwm('6',servo6)
+                    elif event.code == ARM_TIGHT:
+                        servo7-=5
+                        if servo7<=0:
+                            servo7=0
+                        servo.setServoPwm('7',servo7)
+                    elif event.code == ARM_RELEASE:
+                        servo7+=5
+                        if servo7>=180:
+                            servo7=180
+                        servo.setServoPwm('7',servo7)
                     else:
                         print(categorize(event))
     except KeyboardInterrupt:
