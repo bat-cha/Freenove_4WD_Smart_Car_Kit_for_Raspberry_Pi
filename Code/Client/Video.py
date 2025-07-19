@@ -42,7 +42,7 @@ class VideoStreaming:
         return bValid
 
     def face_detect(self,img):
-        if sys.platform.startswith('win') or sys.platform.startswith('darwin'):
+        if sys.platform.startswith('win') or sys.platform.startswith('darwin') or sys.platform.startswith('linux'):
             gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
             faces = self.face_cascade.detectMultiScale(gray,1.3,5)
             if len(faces)>0 :
@@ -93,9 +93,9 @@ class VideoStreaming:
         try:
             self.client_socket1.connect((ip, 5000))
             self.connect_Flag=True
-            print ("Connecttion Successful !")
+            print ("Connection Successful !")
         except Exception as e:
-            print ("Connect to server Faild!: Server IP is right? Server is opend?")
+            print ("Connect to server Failed!: Server IP is right? Server is opened?")
             self.connect_Flag=False
 
 if __name__ == '__main__':
