@@ -76,7 +76,20 @@ class PCA9685:
         self.bus.close()
 
 
+# Module-level singleton so Servo + Motor share a single PCA9685 instance.
+# This avoids the second SLEEP→PRESCALE→WAKE transient on startup that briefly
+# glitched servo PWM lines (audible trembling reported on 2026-05-03).
+_shared_instance = None
+
+
+def get_shared_pca9685(address: int = 0x40, freq: float = 50, debug: bool = False) -> "PCA9685":
+    """Return a process-shared PCA9685 instance, initialized on first call."""
+    global _shared_instance
+    if _shared_instance is None:
+        _shared_instance = PCA9685(address=address, debug=debug)
+        _shared_instance.set_pwm_freq(freq)
+    return _shared_instance
+
+
 if __name__=='__main__':
     pass
-    
-      
