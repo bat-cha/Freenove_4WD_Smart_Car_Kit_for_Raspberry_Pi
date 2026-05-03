@@ -1,0 +1,15 @@
+[Unit]
+Description=Freenove Server
+After=network.target
+
+[Service]
+Environment=GPIOZERO_PIN_FACTORY=pigpio
+Environment=QT_QPA_PLATFORM=offscreen
+ExecStart=/usr/bin/python3 main.py
+WorkingDirectory=/home/pi/Freenove_4WD_Smart_Car_Kit_for_Raspberry_Pi/Code/Server
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
