@@ -92,13 +92,12 @@ class mywindow(QMainWindow, Ui_server_ui):
             self.tcp_server = Server()
 
     def send_sonic_data(self):
-        if time.time() - self.send_sonic_data_time > 0.5:
-            self.send_sonic_data_time = time.time()
-            if self.tcp_server.get_command_server_busy() == False:
-                distance = self.car.sonic.get_distance()
-                cmd = self.command.CMD_MODE + "#3#{:.2f}".format(distance) + "\n"
-                self.tcp_server.send_data_to_command_client(cmd)
-                #print(cmd)
+        # Drop the 0.5 s throttle and the busy-gate — chouky-bots polls at
+        # most ~5 Hz, and skipping replies makes the safe_to_move_forward
+        # gate stay "no recent reading" indefinitely.
+        distance = self.car.sonic.get_distance()
+        cmd = self.command.CMD_MODE + "#3#{:.2f}".format(distance) + "\n"
+        self.tcp_server.send_data_to_command_client(cmd)
 
     def send_light_data(self):
         if time.time() - self.send_light_data_time > 0.3:
